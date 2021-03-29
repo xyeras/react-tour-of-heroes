@@ -1,25 +1,50 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { heroData } from '../data/heroes';
 import { Link } from 'react-router-dom';
+import HeroCard from '../components/HeroCard'
 
 const Heroes = () => {
 
-    const [heroes, setHeroes] = useState(heroData);
+    const [heroes, setHeroes] = useState([]);
+    const [alert, setAlert] = useState(false);
+
+    useEffect(() => {
+        setHeroes(heroData);
+    }, [])
+
+    const updateFeatured = (heroId) => {
+
+        let foundHero = heroData.find(hero => hero.id === +heroId);
+
+        foundHero.featured = !foundHero.featured;
+
+        setAlert(true);
+        setTimeout(() => {
+            setAlert(false);
+        });
+        
+        console.log(foundHero);
+
+    };
 
     return (
         <div id="heroes">
 
-            {heroes.map((hero, index) => {
+            <div className="row text-center mt-3">
+                <div className="col">
+                    <h2>View our Hero Database!</h2>
+                </div>
+            </div>
 
-                return (
-                    <li key={hero.id}>
-                        <Link to={`/heroes/${hero.id}/${hero.alter_ego}`}>
-                            {hero.superhero}
-                        </Link>
-                    </li>
-                );
-
-            })}
+            <div className="row">
+                    {heroes.map(hero => {
+                        return (
+                        <div className="col-sm-12 col-md-3">
+                            <HeroCard hero={hero} updateFeatured={updateFeatured} />
+                        </div>
+                        );
+                    })};
+            </div>
 
         </div>
     );

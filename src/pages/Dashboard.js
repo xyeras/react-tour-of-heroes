@@ -1,9 +1,6 @@
 import { useEffect, useState } from 'react';
 import HeroCard from '../components/HeroCard'
-import { Link } from 'react-router-dom'
 import { heroData } from '../data/heroes';
-import { FaStar, FaRegStar } from 'react-icons/fa';
-import { GiBatMask } from 'react-icons/gi'
 import '../App.css';
 
 const Dashboard = () => {
